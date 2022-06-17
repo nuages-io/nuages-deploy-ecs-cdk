@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".CDK", ".CDK", "{F3EB63C1-E0C5-4440-8DAE-24C91F62B368}"
+	ProjectSection(SolutionItems) = preProject
+		cdk.json = cdk.json
+		Readme.md = Readme.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuages.Deploy.Ecs.Cdk", "src\Nuages.Deploy.Ecs.Cdk\Nuages.Deploy.Ecs.Cdk.csproj", "{6AA4393B-AE29-4218-9D35-E51E71E44577}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6AA4393B-AE29-4218-9D35-E51E71E44577}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AA4393B-AE29-4218-9D35-E51E71E44577}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AA4393B-AE29-4218-9D35-E51E71E44577}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AA4393B-AE29-4218-9D35-E51E71E44577}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

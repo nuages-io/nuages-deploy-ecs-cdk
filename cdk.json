@@ -1,0 +1,3 @@
+{
+  "app": "dotnet run --project src/Nuages.Deploy.Ecs.Cdk/Nuages.Deploy.Ecs.Cdk.csproj"
+}
