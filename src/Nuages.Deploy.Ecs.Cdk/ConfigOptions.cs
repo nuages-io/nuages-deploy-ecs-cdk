@@ -27,6 +27,7 @@ public class ConfigOptions
     public bool AppConfigEnabled { get; set; }
     public string CertificateFilename { get; set; }
     public string CertificatePassword { get; set; }
+    public bool TriggerOnPush { get; set; }
 
     
     

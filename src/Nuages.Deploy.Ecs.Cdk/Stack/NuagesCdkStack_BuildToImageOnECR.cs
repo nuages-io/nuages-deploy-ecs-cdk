@@ -184,7 +184,7 @@ public partial class NuagesCdkStack
                     Owner = parts.First(),
                     Repo = parts.Last(),
                     Branch = GitHubBranch,
-                    TriggerOnPush = false,
+                    TriggerOnPush = TriggerOnPush,
                     ActionName = "Source"
                 })
             }
