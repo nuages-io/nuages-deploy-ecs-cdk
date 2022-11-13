@@ -18,7 +18,7 @@ public partial class NuagesCdkStack : Amazon.CDK.Stack
 
     public static void CreateStack(Construct scope, IConfiguration configuration)
     {
-        var options = configuration.Get<ConfigOptions>();
+        var options = configuration.Get<ConfigOptions>()!;
         
         var stack = new NuagesCdkStack(scope, options.StackName + "Stack", new StackProps
         {

@@ -26,7 +26,7 @@ sealed class Program
 
         var configuration = builder.Build();
 
-        var config = configuration.GetSection("ApplicationConfig").Get<ApplicationConfig>();
+        var config = configuration.GetSection("ApplicationConfig").Get<ApplicationConfig>()!;
         
         if (config.ParameterStore.Enabled)
         {
