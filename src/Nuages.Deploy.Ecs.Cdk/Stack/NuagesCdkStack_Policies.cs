@@ -65,7 +65,14 @@ public partial class NuagesCdkStack
                     new PolicyStatement(new PolicyStatementProps
                     {
                         Effect = Effect.ALLOW,
-                        Actions = new[] { "ssm:GetParametersByPath", "ssm:PutParameter", "appconfig:*" },
+                        Actions = new[] { "ssm:GetParametersByPath", "ssm:PutParameter" },
+                        Resources = new[] { "*" }
+                    }),
+                    new PolicyStatement(new PolicyStatementProps
+                    {
+                        Effect = Effect.ALLOW,
+                        Actions = new[] {  "appconfig:StartConfigurationSession",
+                            "appconfig:GetLatestConfiguration" },
                         Resources = new[] { "*" }
                     })
                 }
