@@ -12,7 +12,7 @@ namespace Nuages.Deploy.Ecs.Cdk;
 
 [ExcludeFromCodeCoverage]
 // ReSharper disable once ClassNeverInstantiated.Global
-sealed class Program
+partial class Program
 {
     // ReSharper disable once UnusedParameter.Global
     public static void Main(string[] args)
@@ -21,7 +21,7 @@ sealed class Program
 
         var builder = configManager
             .AddJsonFile("appsettings.json", false, true)
-            .AddJsonFile("appsettings.deploy.json", true, true)
+            .AddJsonFile("appsettings.deploy.json", false, true)
             .AddEnvironmentVariables();
 
         var configuration = builder.Build();
@@ -43,6 +43,8 @@ sealed class Program
                 config.AppConfig.EnvironmentId, 
                 config.AppConfig.ConfigProfileId,true);
         }
+
+        DoAdditionnalConfiguration(builder);
         
         var secretProvider = new AWSSecretProvider();
         secretProvider.TransformSecrets(configManager);
@@ -53,4 +55,6 @@ sealed class Program
         
         app.Synth();
     }
+    
+    static partial void DoAdditionnalConfiguration(IConfigurationBuilder builder);
 }
