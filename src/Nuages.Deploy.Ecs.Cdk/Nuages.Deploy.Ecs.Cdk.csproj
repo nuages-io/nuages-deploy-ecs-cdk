@@ -35,5 +35,8 @@
         <None Remove="appsettings.json" />
         <Content Include="appsettings.json" CopyToOutputDirectory="Always" />
     </ItemGroup>
-    
+    <ItemGroup>
+        <None Remove="appsettings.deploy.json" />
+        <Content Include="appsettings.deploy.json" CopyToOutputDirectory="Always" Condition="Exists('appsettings.deploy.json')" />
+    </ItemGroup>
 </Project>
