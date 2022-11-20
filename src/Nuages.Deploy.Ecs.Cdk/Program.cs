@@ -33,7 +33,7 @@ partial class Program
             builder.AddSystemsManager(configureSource =>
             {
                 configureSource.Path = config.ParameterStore.Path;
-                configureSource.Optional = true;
+                configureSource.Optional = false;
             });
         }
 
@@ -41,7 +41,7 @@ partial class Program
         {
             builder.AddAppConfig(config.AppConfig.ApplicationId,  
                 config.AppConfig.EnvironmentId, 
-                config.AppConfig.ConfigProfileId,true);
+                config.AppConfig.ConfigProfileId,false);
         }
 
         DoAdditionnalConfiguration(builder);
