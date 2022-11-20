@@ -2,13 +2,13 @@
 using Amazon.CDK;
 using Microsoft.Extensions.Configuration;
 using Nuages.AWS.Secrets;
-using Nuages.Deploy.Ecs.Deploy.Stack;
 using Nuages.Web;
+using NuagesCdkStack = Nuages.Deploy.Ecs.Cdk.Stack.NuagesCdkStack;
 
 // ReSharper disable ArrangeTypeModifiers
 // ReSharper disable ObjectCreationAsStatement
 
-namespace Nuages.Deploy.Ecs.Deploy;
+namespace Nuages.Deploy.Ecs.Cdk;
 
 [ExcludeFromCodeCoverage]
 // ReSharper disable once ClassNeverInstantiated.Global
@@ -21,7 +21,7 @@ sealed class Program
 
         var builder = configManager
             .AddJsonFile("appsettings.json", false, true)
-            .AddJsonFile("appsettings.local.json", false, true)
+            .AddJsonFile("appsettings.deploy.json", true, true)
             .AddEnvironmentVariables();
 
         var configuration = builder.Build();

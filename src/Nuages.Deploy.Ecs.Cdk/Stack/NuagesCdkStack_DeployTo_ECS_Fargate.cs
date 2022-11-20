@@ -10,7 +10,7 @@ using Amazon.CDK.AWS.Route53;
 using HealthCheck = Amazon.CDK.AWS.ElasticLoadBalancingV2.HealthCheck;
 using Protocol = Amazon.CDK.AWS.ElasticLoadBalancingV2.Protocol;
 
-namespace Nuages.Deploy.Ecs.Deploy.Stack;
+namespace Nuages.Deploy.Ecs.Cdk.Stack;
 
 public partial class NuagesCdkStack
 {

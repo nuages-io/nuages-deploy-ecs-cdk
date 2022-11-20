@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 
 // ReSharper disable ObjectCreationAsStatement
 
-namespace Nuages.Deploy.Ecs.Deploy.Stack;
+namespace Nuages.Deploy.Ecs.Cdk.Stack;
 
 [ExcludeFromCodeCoverage]
 public partial class NuagesCdkStack : Amazon.CDK.Stack

@@ -4,7 +4,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-namespace Nuages.Deploy.Ecs.Deploy;
+namespace Nuages.Deploy.Ecs.Cdk;
 
 [ExcludeFromCodeCoverage]
 public class ConfigOptions

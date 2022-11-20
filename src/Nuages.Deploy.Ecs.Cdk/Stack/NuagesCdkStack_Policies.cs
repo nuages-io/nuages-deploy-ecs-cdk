@@ -3,7 +3,7 @@ using Amazon.CDK.AWS.IAM;
 // ReSharper disable InconsistentNaming
 // ReSharper disable VirtualMemberNeverOverridden.Global
 
-namespace Nuages.Deploy.Ecs.Deploy.Stack;
+namespace Nuages.Deploy.Ecs.Cdk.Stack;
 
 public partial class NuagesCdkStack
 {

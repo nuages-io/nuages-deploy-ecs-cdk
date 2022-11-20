@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using Amazon.CDK;
 using Amazon.CDK.AWS.CodeBuild;
 using Amazon.CDK.AWS.CodePipeline;
 using Amazon.CDK.AWS.CodePipeline.Actions;
@@ -11,7 +10,7 @@ using StageProps = Amazon.CDK.AWS.CodePipeline.StageProps;
 
 // ReSharper disable ObjectCreationAsStatement
 
-namespace Nuages.Deploy.Ecs.Deploy.Stack;
+namespace Nuages.Deploy.Ecs.Cdk.Stack;
 
 [SuppressMessage("Performance", "CA1806:Do not ignore method results")]
 public partial class NuagesCdkStack
