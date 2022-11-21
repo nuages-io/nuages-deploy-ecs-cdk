@@ -29,6 +29,6 @@ public class ConfigOptions
     public string CertificatePassword { get; set; }
     public bool TriggerOnPush { get; set; }
 
-    
-    
+    public string[] AppConfigResources { get; set; } 
+
 }

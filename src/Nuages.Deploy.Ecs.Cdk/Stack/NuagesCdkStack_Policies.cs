@@ -54,7 +54,7 @@ public partial class NuagesCdkStack
         });
     }
 
-    private Policy CreateSystemsManagerParametersRolePolicy(string suffix)
+    private Policy CreateSystemsManagerParameterRolePolicy(string suffix)
     {
         return new Policy(this, MakeId("SystemsManagerParametersRole" + suffix), new PolicyProps
         {
@@ -67,13 +67,25 @@ public partial class NuagesCdkStack
                         Effect = Effect.ALLOW,
                         Actions = new[] { "ssm:GetParametersByPath", "ssm:PutParameter" },
                         Resources = new[] { "*" }
-                    }),
+                    })
+                }
+            })
+        });
+    }
+    
+    private Policy CreateSystemsManagerAppConfigRolePolicy(string suffix)
+    {
+        return new Policy(this, MakeId("SystemsManagerAppConfigRole" + suffix), new PolicyProps
+        {
+            Document = new PolicyDocument(new PolicyDocumentProps
+            {
+                Statements = new[]
+                {
                     new PolicyStatement(new PolicyStatementProps
                     {
                         Effect = Effect.ALLOW,
-                        Actions = new[] {  "appconfig:StartConfigurationSession",
-                            "appconfig:GetLatestConfiguration" },
-                        Resources = new[] { "*" }
+                        Actions = new[] {  "appconfig:StartConfigurationSession", "appconfig:GetLatestConfiguration" },
+                        Resources = AppConfigResources
                     })
                 }
             })

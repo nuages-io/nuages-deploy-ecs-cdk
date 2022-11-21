@@ -20,19 +20,19 @@ public partial class NuagesCdkStack
         {
             VpcId = VpcId
         });
-        
+
         ISecurityGroup[]? securityGroups = null;
 
-        if (!string.IsNullOrEmpty(SecurityGroupId)) 
+        if (!string.IsNullOrEmpty(SecurityGroupId))
         {
-            securityGroups= new[] { SecurityGroup.FromLookupById(this, "WebApiSGDefault", SecurityGroupId!) };
+            securityGroups = new[] { SecurityGroup.FromLookupById(this, "WebApiSGDefault", SecurityGroupId!) };
         }
-        
+
         var cluster = new Cluster(this, $"{StackName}Cluster", new ClusterProps
         {
             Vpc = vpc
         });
-        
+
         var repository = Repository.FromRepositoryName(this, $"{StackName}ImageRepository", EcrRepositoryName);
 
         var taskOptions = new ApplicationLoadBalancedTaskImageOptions
@@ -53,7 +53,7 @@ public partial class NuagesCdkStack
                     "Nuages__UseAWS", "true"
                 },
                 {
-                    "ASPNETCORE_Kestrel__Certificates__Default__Password" , CertificatePassword
+                    "ASPNETCORE_Kestrel__Certificates__Default__Password", CertificatePassword
                 },
                 {
                     "ASPNETCORE_Kestrel__Certificates__Default__Path", CertificateFilename
@@ -68,7 +68,7 @@ public partial class NuagesCdkStack
         {
             DomainName = GetBaseDomain(DomainName)
         });
-        
+
         // Create a load-balanced Fargate service and make it public
         var service = new ApplicationLoadBalancedFargateService(this, $"{StackName}FargateService",
             new ApplicationLoadBalancedFargateServiceProps
@@ -80,7 +80,7 @@ public partial class NuagesCdkStack
                 ListenerPort = 443,
                 TargetProtocol = ApplicationProtocol.HTTPS,
                 Certificate = Certificate.FromCertificateArn(this, $"{StackName}Cert", CertificateArn),
-                DesiredCount = EcsDesiredCount, 
+                DesiredCount = EcsDesiredCount,
                 TaskImageOptions = taskOptions,
                 MemoryLimitMiB = EcsMemoryLimit,
                 PublicLoadBalancer = true,
@@ -98,17 +98,20 @@ public partial class NuagesCdkStack
             UnhealthyThresholdCount = 3,
             Protocol = Protocol.HTTPS
         });
-        
+
         var role = service.TaskDefinition.TaskRole;
 
-        role.AttachInlinePolicy(CreateSystemsManagerParametersRolePolicy("Task"));
+        role.AttachInlinePolicy(CreateSystemsManagerParameterRolePolicy("Task"));
+        role.AttachInlinePolicy(CreateSystemsManagerAppConfigRolePolicy("Task"));
         role.AttachInlinePolicy(CreateSESRolePolicy("Task"));
         role.AttachInlinePolicy(CreateSnsRolePolicy("Task"));
         role.AttachInlinePolicy(CreateCloudWatchRolePolicy("Task"));
         role.AttachInlinePolicy(CreateSecretsManagerPolicy("Task"));
         role.AttachInlinePolicy(CreateEventBridgeRolePolicy("Task"));
-        
-       service.TaskDefinition.ExecutionRole!.AttachInlinePolicy(new Policy(this, "EcrPolicy", new PolicyProps
+
+        CreateAdditionalRoles(role);
+
+        service.TaskDefinition.ExecutionRole!.AttachInlinePolicy(new Policy(this, "EcrPolicy", new PolicyProps
         {
             Document = new PolicyDocument(new PolicyDocumentProps
             {
@@ -124,7 +127,8 @@ public partial class NuagesCdkStack
             })
         }));
 
-       CreateBuildToEcr(service.Service);
+        CreateBuildToEcr(service.Service);
     }
 
+    static partial void CreateAdditionalRoles(IRole taskRole);
 }

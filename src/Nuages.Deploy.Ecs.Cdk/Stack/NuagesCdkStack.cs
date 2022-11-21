@@ -47,14 +47,15 @@ public partial class NuagesCdkStack : Amazon.CDK.Stack
             CertificateFilename = options.CertificateFilename,
             CertificatePassword = options.CertificatePassword,
             EcrRepositoryName = options.EcrRepositoryName,
-            TriggerOnPush = options.TriggerOnPush
-            
+            TriggerOnPush = options.TriggerOnPush,
+            AppConfigResources = options.AppConfigResources
         };
         
         stack.CreateTemplate();
     }
 
-    
+    public string[] AppConfigResources { get; set; }
+
 
     private string EcrRepositoryName { get; init; }  = string.Empty;
     private int EcsDesiredCount { get; init; }
@@ -77,6 +78,7 @@ public partial class NuagesCdkStack : Amazon.CDK.Stack
     private string? SecurityGroupId { get; init; }
     private bool TriggerOnPush { get; set; }
     
+
     private void CreateTemplate()
     {
         BuildBucket = new Bucket(this, $"{StackName}BuildBucket", new BucketProps
