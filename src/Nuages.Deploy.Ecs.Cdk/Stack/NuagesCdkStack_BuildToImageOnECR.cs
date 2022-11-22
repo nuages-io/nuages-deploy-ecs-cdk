@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Amazon.CDK;
 using Amazon.CDK.AWS.CodeBuild;
 using Amazon.CDK.AWS.CodePipeline;
 using Amazon.CDK.AWS.CodePipeline.Actions;
@@ -23,7 +24,8 @@ public partial class NuagesCdkStack
     {
         var repository = new Repository(this, $"{StackName}Repository", new RepositoryProps
         {
-            RepositoryName = $"{StackName}Repository"
+            RepositoryName = $"{StackName}Repository",
+            RemovalPolicy = RemovalPolicy.DESTROY
         });
 
         // ReSharper disable once ObjectCreationAsStatement
