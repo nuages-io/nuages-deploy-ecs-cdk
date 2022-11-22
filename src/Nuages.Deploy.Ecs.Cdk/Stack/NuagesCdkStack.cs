@@ -58,9 +58,9 @@ public partial class NuagesCdkStack : Amazon.CDK.Stack
             Versioned = true
         });
         
-        if (!string.IsNullOrEmpty(DeploymentOptions.AdditionalFilesBucketName))
+        if (!string.IsNullOrEmpty(DeploymentOptions.CertificateBucketName))
         {
-            AdditionalFilesBucket = Bucket.FromBucketName(this, $"{StackName}AddtionalFilesBucket", DeploymentOptions.AdditionalFilesBucketName);
+            AdditionalFilesBucket = Bucket.FromBucketName(this, $"{StackName}CertificateBucket", DeploymentOptions.CertificateBucketName);
         }
 
         CreateEcs();

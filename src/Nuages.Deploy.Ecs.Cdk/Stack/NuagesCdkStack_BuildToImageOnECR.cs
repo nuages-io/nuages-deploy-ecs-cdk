@@ -198,7 +198,7 @@ public partial class NuagesCdkStack
             sourceStageProps.Actions = sourceStageProps.Actions.Append(new S3SourceAction(new S3SourceActionProps
             {
                 Bucket = AdditionalFilesBucket,
-                BucketKey = DeploymentOptions.AdditionalFilesZipName!,
+                BucketKey = DeploymentOptions.CertificateZipFileName!,
                 Output = configArtifact,
                 Trigger = S3Trigger.EVENTS,
                 ActionName = "AdditionalFiles"

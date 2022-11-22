@@ -13,8 +13,8 @@ public class DeploymentOptions
     public string GitHubRepository { get; set; } = null!;
     public string GitHubBranch { get; set; } = null!;
     public string GitHubConnectionArn { get; set; } = null!;
-    public string? AdditionalFilesBucketName { get; set; }
-    public string? AdditionalFilesZipName { get; set; }
+    public string? CertificateBucketName { get; set; }
+    public string? CertificateZipFileName { get; set; }
     public int EcsCpu { get; set; } = 236;
     public int EcsMemoryLimit { get; set; } = 1024;
     public int EcsDesiredCount { get; set; } = 1;
