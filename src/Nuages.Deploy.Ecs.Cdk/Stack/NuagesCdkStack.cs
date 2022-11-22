@@ -22,12 +22,14 @@ public partial class NuagesCdkStack : Amazon.CDK.Stack
         var deploymentOptions = configuration.GetSection("DeploymentOptions").Get<DeploymentOptions>()!;
         var runtimeOptions = configuration.GetSection("RuntimeOptions").Get<RuntimeOptions>()!;
 
-        if (string.IsNullOrEmpty(deploymentOptions.StackName))
+        var stackName = configuration.GetValue<string>("StackName");
+        
+        if (string.IsNullOrEmpty(stackName))
             throw new Exception("StackName must be provided");
         
-        var stack = new NuagesCdkStack(scope, deploymentOptions.StackName + "Stack", new StackProps
+        var stack = new NuagesCdkStack(scope, stackName + "Stack", new StackProps
         {
-            StackName = deploymentOptions.StackName,
+            StackName = stackName,
             Env = new Amazon.CDK.Environment
             {
                 Account = System.Environment.GetEnvironmentVariable("CDK_DEFAULT_ACCOUNT"),

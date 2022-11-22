@@ -7,7 +7,6 @@ namespace Nuages.Deploy.Ecs.Cdk;
 [ExcludeFromCodeCoverage]
 public class DeploymentOptions
 {
-    public string StackName { get; set; } = null!;
     public string DomainName { get; set; } = null!;
     public string CertificateArn { get; set; } = null!;
     public string VpcId { get; set; } = null!;
