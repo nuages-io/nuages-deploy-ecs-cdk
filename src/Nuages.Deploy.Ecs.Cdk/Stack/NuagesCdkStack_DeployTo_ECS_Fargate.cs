@@ -47,10 +47,10 @@ public partial class NuagesCdkStack
                     "Nuages__ApplicationConfig__AppConfig__ConfigProfileId", RuntimeOptions.AppConfigProfileId ?? ""
                 },
                 {
-                    "Nuages__ApplicationConfig__AppConfig__Enabled", DeploymentOptions.AppConfigResources.Any().ToString()
+                    "Nuages__ApplicationConfig__AppConfig__Enabled", DeploymentOptions.AppConfigResources.Any().ToString().ToLower()
                 },
                 {
-                    "Nuages__UseAWS", true.ToString()
+                    "Nuages__UseAWS", true.ToString().ToLower()
                 },
                 {
                     "ASPNETCORE_Kestrel__Certificates__Default__Password", RuntimeOptions.CertificatePassword ?? ""
