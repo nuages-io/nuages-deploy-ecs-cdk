@@ -24,7 +24,7 @@ public partial class NuagesCdkStack
     {
         var repository = new Repository(this, $"{StackName}Repository", new RepositoryProps
         {
-            RepositoryName = $"{StackName}Repository",
+            RepositoryName =  $"{StackName}-Repository".ToLower(),
             RemovalPolicy = RemovalPolicy.DESTROY
         });
 
