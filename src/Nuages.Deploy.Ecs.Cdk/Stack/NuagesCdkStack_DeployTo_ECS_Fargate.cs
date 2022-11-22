@@ -44,19 +44,19 @@ public partial class NuagesCdkStack
             Environment = new Dictionary<string, string>
             {
                 {
-                    "Nuages__ApplicationConfig__AppConfig__ConfigProfileId", RuntimeOptions.AppConfigProfileId
+                    "Nuages__ApplicationConfig__AppConfig__ConfigProfileId", RuntimeOptions.AppConfigProfileId ?? ""
                 },
                 {
                     "Nuages__ApplicationConfig__AppConfig__Enabled", DeploymentOptions.AppConfigResources.Any().ToString()
                 },
                 {
-                    "Nuages__UseAWS", "true"
+                    "Nuages__UseAWS", true.ToString()
                 },
                 {
-                    "ASPNETCORE_Kestrel__Certificates__Default__Password", RuntimeOptions.CertificatePassword
+                    "ASPNETCORE_Kestrel__Certificates__Default__Password", RuntimeOptions.CertificatePassword ?? ""
                 },
                 {
-                    "ASPNETCORE_Kestrel__Certificates__Default__Path", RuntimeOptions.CertificateFilename
+                    "ASPNETCORE_Kestrel__Certificates__Default__Path", RuntimeOptions.CertificateFilename ?? ""
                 },
                 {
                     "ASPNETCORE_URLS", "https://+;http://+"
