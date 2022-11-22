@@ -22,7 +22,7 @@ public partial class NuagesCdkStack
 
     private void CreateBuildToEcr(IBaseService service)
     {
-        var repository = new Repository(this, $"{StackName}Repository", new RepositoryProps
+        var repository = new Repository(this, $"{StackName}-Repository", new RepositoryProps
         {
             RepositoryName =  $"{StackName}-Repository".ToLower(),
             RemovalPolicy = RemovalPolicy.DESTROY
