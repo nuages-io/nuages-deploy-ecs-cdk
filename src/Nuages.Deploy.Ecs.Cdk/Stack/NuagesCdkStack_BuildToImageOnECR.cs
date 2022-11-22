@@ -25,7 +25,7 @@ public partial class NuagesCdkStack
         var repository = new Repository(this, $"{StackName}-Repository", new RepositoryProps
         {
             RepositoryName =  $"{StackName}-Repository".ToLower(),
-            RemovalPolicy = RemovalPolicy.DESTROY
+            RemovalPolicy = RemovalPolicy.RETAIN //MUST NOT BE CHANGED. Can't delete if images present
         });
 
         // ReSharper disable once ObjectCreationAsStatement
