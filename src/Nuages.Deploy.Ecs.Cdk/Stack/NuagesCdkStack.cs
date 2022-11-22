@@ -3,6 +3,7 @@ using Amazon.CDK;
 using Amazon.CDK.AWS.S3;
 using Constructs;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting.Internal;
 
 // ReSharper disable ObjectCreationAsStatement
 
@@ -20,6 +21,9 @@ public partial class NuagesCdkStack : Amazon.CDK.Stack
     {
         var deploymentOptions = configuration.GetSection("DeploymentOptions").Get<DeploymentOptions>()!;
         var runtimeOptions = configuration.GetSection("RuntimeOptions").Get<RuntimeOptions>()!;
+
+        if (string.IsNullOrEmpty(deploymentOptions.StackName))
+            throw new Exception("StackName must be provided");
         
         var stack = new NuagesCdkStack(scope, deploymentOptions.StackName + "Stack", new StackProps
         {
