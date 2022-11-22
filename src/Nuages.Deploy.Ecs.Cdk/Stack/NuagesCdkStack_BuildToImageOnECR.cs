@@ -93,8 +93,8 @@ public partial class NuagesCdkStack
                                         "aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com",
                                         "REPOSITORY_URI=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME",
                                         "echo $REPOSITORY_URI",
-                                        "echo $CODEBUILD_SRC_DIR_ConfigArtifact",
-                                        "cp $CODEBUILD_SRC_DIR_ConfigArtifact/*.* ."
+                                        AdditionalFilesBucket != null ? "echo $CODEBUILD_SRC_DIR_ConfigArtifact" : "",
+                                        AdditionalFilesBucket != null ? "cp $CODEBUILD_SRC_DIR_ConfigArtifact/*.* ." : ""
                                     }
                                 }
                             }
