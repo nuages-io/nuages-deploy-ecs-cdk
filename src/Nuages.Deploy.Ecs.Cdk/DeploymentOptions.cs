@@ -15,7 +15,6 @@ public class DeploymentOptions
     public string GitHubConnectionArn { get; set; } = null!;
     public string? AdditionalFilesBucketName { get; set; }
     public string? AdditionalFilesZipName { get; set; }
-    public string EcrRepositoryName { get; set; } = null!;
     public int EcsCpu { get; set; } = 236;
     public int EcsMemoryLimit { get; set; } = 1024;
     public int EcsDesiredCount { get; set; } = 1;

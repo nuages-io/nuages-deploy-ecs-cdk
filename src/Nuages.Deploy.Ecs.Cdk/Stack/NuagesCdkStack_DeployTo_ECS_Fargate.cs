@@ -33,7 +33,7 @@ public partial class NuagesCdkStack
             Vpc = vpc
         });
 
-        var repository = Repository.FromRepositoryName(this, $"{StackName}ImageRepository", DeploymentOptions.EcrRepositoryName);
+        var repository = Repository.FromRepositoryName(this, $"{StackName}ImageRepository",$"{StackName}Repository");
 
         var taskOptions = new ApplicationLoadBalancedTaskImageOptions
         {

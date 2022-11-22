@@ -23,7 +23,7 @@ public partial class NuagesCdkStack
     {
         var repository = new Repository(this, $"{StackName}Repository", new RepositoryProps
         {
-            RepositoryName = DeploymentOptions.EcrRepositoryName
+            RepositoryName = $"{StackName}Repository"
         });
 
         // ReSharper disable once ObjectCreationAsStatement
