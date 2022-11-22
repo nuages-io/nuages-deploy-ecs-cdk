@@ -7,7 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Nuages.Deploy.Ecs.Cdk;
 
 [ExcludeFromCodeCoverage]
-public class ConfigOptions
+public class DeploymentOptions
 {
     public string StackName { get; set; }
     public string DomainName { get; set; }
@@ -23,12 +23,21 @@ public class ConfigOptions
     public int EcsMemoryLimit { get; set; } = 1024;
     public int EcsDesiredCount { get; set; } = 1;
     public string SecurityGroupId { get; set; }
-    public string AppConfigProfileId { get; set; }
-    public bool AppConfigEnabled { get; set; }
-    public string CertificateFilename { get; set; }
-    public string CertificatePassword { get; set; }
+  
     public bool TriggerOnPush { get; set; }
 
-    public string[] AppConfigResources { get; set; } =  { "*" };
+    public string[] AppConfigResources { get; set; } = Array.Empty<string>();
+    public string[] SesResources { get; set; } = Array.Empty<string>();
+    public string[] ParameterStoreResources { get; set; } = Array.Empty<string>();
+    public string[] SnsResources { get; set; } = Array.Empty<string>();
+    public string[] SecretResources { get; set; } = Array.Empty<string>();
+    public string[] CloudWatchResources { get; set; } = Array.Empty<string>();
+    public string[] EventBridgeResources { get; set; } = Array.Empty<string>();
+}
 
+public class RuntimeOptions
+{
+    public string AppConfigProfileId { get; set; }
+    public string CertificateFilename { get; set; }
+    public string CertificatePassword { get; set; }
 }

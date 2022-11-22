@@ -85,7 +85,7 @@ public partial class NuagesCdkStack
                     {
                         Effect = Effect.ALLOW,
                         Actions = new[] {  "appconfig:StartConfigurationSession", "appconfig:GetLatestConfiguration" },
-                        Resources = AppConfigResources
+                        Resources = DeploymentOptions.AppConfigResources
                     })
                 }
             })

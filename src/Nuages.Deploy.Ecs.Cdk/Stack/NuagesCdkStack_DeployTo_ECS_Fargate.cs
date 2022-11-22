@@ -18,14 +18,14 @@ public partial class NuagesCdkStack
     {
         var vpc = Vpc.FromLookup(this, "ClusterVpc", new VpcLookupOptions
         {
-            VpcId = VpcId
+            VpcId = DeploymentOptions.VpcId
         });
 
         ISecurityGroup[]? securityGroups = null;
 
-        if (!string.IsNullOrEmpty(SecurityGroupId))
+        if (!string.IsNullOrEmpty(DeploymentOptions.SecurityGroupId))
         {
-            securityGroups = new[] { SecurityGroup.FromLookupById(this, "WebApiSGDefault", SecurityGroupId!) };
+            securityGroups = new[] { SecurityGroup.FromLookupById(this, "WebApiSGDefault", DeploymentOptions.SecurityGroupId!) };
         }
 
         var cluster = new Cluster(this, $"{StackName}Cluster", new ClusterProps
@@ -33,7 +33,7 @@ public partial class NuagesCdkStack
             Vpc = vpc
         });
 
-        var repository = Repository.FromRepositoryName(this, $"{StackName}ImageRepository", EcrRepositoryName);
+        var repository = Repository.FromRepositoryName(this, $"{StackName}ImageRepository", DeploymentOptions.EcrRepositoryName);
 
         var taskOptions = new ApplicationLoadBalancedTaskImageOptions
         {
@@ -44,19 +44,19 @@ public partial class NuagesCdkStack
             Environment = new Dictionary<string, string>
             {
                 {
-                    "Nuages__ApplicationConfig__AppConfig__ConfigProfileId", AppConfigProfileId
+                    "Nuages__ApplicationConfig__AppConfig__ConfigProfileId", RuntimeOptions.AppConfigProfileId
                 },
                 {
-                    "Nuages__ApplicationConfig__AppConfig__Enabled", AppConfigEnabled
+                    "Nuages__ApplicationConfig__AppConfig__Enabled", DeploymentOptions.AppConfigResources.Any().ToString()
                 },
                 {
                     "Nuages__UseAWS", "true"
                 },
                 {
-                    "ASPNETCORE_Kestrel__Certificates__Default__Password", CertificatePassword
+                    "ASPNETCORE_Kestrel__Certificates__Default__Password", RuntimeOptions.CertificatePassword
                 },
                 {
-                    "ASPNETCORE_Kestrel__Certificates__Default__Path", CertificateFilename
+                    "ASPNETCORE_Kestrel__Certificates__Default__Path", RuntimeOptions.CertificateFilename
                 },
                 {
                     "ASPNETCORE_URLS", "https://+;http://+"
@@ -66,23 +66,23 @@ public partial class NuagesCdkStack
 
         var hostedZone = HostedZone.FromLookup(this, "LookupZoneECS", new HostedZoneProviderProps
         {
-            DomainName = GetBaseDomain(DomainName)
+            DomainName = GetBaseDomain(DeploymentOptions.DomainName)
         });
 
         // Create a load-balanced Fargate service and make it public
         var service = new ApplicationLoadBalancedFargateService(this, $"{StackName}FargateService",
             new ApplicationLoadBalancedFargateServiceProps
             {
-                Cpu = EcsCpu, //.25 .vCPU
+                Cpu = DeploymentOptions.EcsCpu, //.25 .vCPU
                 Cluster = cluster,
-                DomainName = DomainName,
+                DomainName = DeploymentOptions.DomainName,
                 DomainZone = hostedZone,
                 ListenerPort = 443,
                 TargetProtocol = ApplicationProtocol.HTTPS,
-                Certificate = Certificate.FromCertificateArn(this, $"{StackName}Cert", CertificateArn),
-                DesiredCount = EcsDesiredCount,
+                Certificate = Certificate.FromCertificateArn(this, $"{StackName}Cert", DeploymentOptions.CertificateArn),
+                DesiredCount = DeploymentOptions.EcsDesiredCount,
                 TaskImageOptions = taskOptions,
-                MemoryLimitMiB = EcsMemoryLimit,
+                MemoryLimitMiB = DeploymentOptions.EcsMemoryLimit,
                 PublicLoadBalancer = true,
                 SecurityGroups = securityGroups
             }
@@ -101,13 +101,26 @@ public partial class NuagesCdkStack
 
         var role = service.TaskDefinition.TaskRole;
 
-        role.AttachInlinePolicy(CreateSystemsManagerParameterRolePolicy("Task"));
-        role.AttachInlinePolicy(CreateSystemsManagerAppConfigRolePolicy("Task"));
-        role.AttachInlinePolicy(CreateSESRolePolicy("Task"));
-        role.AttachInlinePolicy(CreateSnsRolePolicy("Task"));
-        role.AttachInlinePolicy(CreateCloudWatchRolePolicy("Task"));
-        role.AttachInlinePolicy(CreateSecretsManagerPolicy("Task"));
-        role.AttachInlinePolicy(CreateEventBridgeRolePolicy("Task"));
+        if (DeploymentOptions.ParameterStoreResources.Any())
+            role.AttachInlinePolicy(CreateSystemsManagerParameterRolePolicy("Task"));
+        
+        if (DeploymentOptions.AppConfigResources.Any())
+            role.AttachInlinePolicy(CreateSystemsManagerAppConfigRolePolicy("Task"));
+        
+        if (DeploymentOptions.SesResources.Any())
+            role.AttachInlinePolicy(CreateSESRolePolicy("Task"));
+        
+        if (DeploymentOptions.SnsResources.Any())
+            role.AttachInlinePolicy(CreateSnsRolePolicy("Task"));
+        
+        if (DeploymentOptions.CloudWatchResources.Any())
+            role.AttachInlinePolicy(CreateCloudWatchRolePolicy("Task"));
+        
+        if (DeploymentOptions.SecretResources.Any())
+            role.AttachInlinePolicy(CreateSecretsManagerPolicy("Task"));
+        
+        if (DeploymentOptions.EventBridgeResources.Any())
+            role.AttachInlinePolicy(CreateEventBridgeRolePolicy("Task"));
 
         CreateAdditionalRoles(role);
 

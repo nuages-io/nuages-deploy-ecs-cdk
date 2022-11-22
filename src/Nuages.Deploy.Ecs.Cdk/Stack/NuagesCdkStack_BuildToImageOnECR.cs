@@ -23,7 +23,7 @@ public partial class NuagesCdkStack
     {
         var repository = new Repository(this, $"{StackName}Repository", new RepositoryProps
         {
-            RepositoryName = EcrRepositoryName
+            RepositoryName = DeploymentOptions.EcrRepositoryName
         });
 
         // ReSharper disable once ObjectCreationAsStatement
@@ -32,9 +32,9 @@ public partial class NuagesCdkStack
             ProjectName = MakeId($"{StackName}BuildToECR"),
             Source = Source.GitHub(new GitHubSourceProps
             {
-                Owner = GitHubRepository.Split("/").First(),
-                Repo = GitHubRepository.Split("/").Last(),
-                BranchOrRef = GitHubBranch,
+                Owner = DeploymentOptions.GitHubRepository.Split("/").First(),
+                Repo = DeploymentOptions.GitHubRepository.Split("/").Last(),
+                BranchOrRef = DeploymentOptions.GitHubBranch,
                 Webhook = false
             }),
             Environment = new BuildEnvironment
@@ -169,7 +169,7 @@ public partial class NuagesCdkStack
         
         var imageDef = new Artifact_("BuildArtifact");
 
-        var parts = GitHubRepository.Split("/");
+        var parts = DeploymentOptions.GitHubRepository.Split("/");
 
         var sourceStageProps = new StageProps
         {
@@ -178,12 +178,12 @@ public partial class NuagesCdkStack
             {
                 new CodeStarConnectionsSourceAction(new CodeStarConnectionsSourceActionProps
                 {
-                    ConnectionArn = GitHubConnectionArn,
+                    ConnectionArn = DeploymentOptions.GitHubConnectionArn,
                     Output = sourceArtifact,
                     Owner = parts.First(),
                     Repo = parts.Last(),
-                    Branch = GitHubBranch,
-                    TriggerOnPush = TriggerOnPush,
+                    Branch = DeploymentOptions.GitHubBranch,
+                    TriggerOnPush = DeploymentOptions.TriggerOnPush,
                     ActionName = "Source"
                 })
             }
@@ -196,7 +196,7 @@ public partial class NuagesCdkStack
             sourceStageProps.Actions = sourceStageProps.Actions.Append(new S3SourceAction(new S3SourceActionProps
             {
                 Bucket = AdditionalFilesBucket,
-                BucketKey = AdditionalFilesZipName!,
+                BucketKey = DeploymentOptions.AdditionalFilesZipName!,
                 Output = configArtifact,
                 Trigger = S3Trigger.EVENTS,
                 ActionName = "AdditionalFiles"

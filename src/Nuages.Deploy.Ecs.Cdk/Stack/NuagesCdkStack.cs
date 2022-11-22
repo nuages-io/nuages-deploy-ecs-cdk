@@ -18,11 +18,12 @@ public partial class NuagesCdkStack : Amazon.CDK.Stack
 
     public static void CreateStack(Construct scope, IConfiguration configuration)
     {
-        var options = configuration.Get<ConfigOptions>()!;
+        var deploymentOptions = configuration.GetSection("DeploymentOptions").Get<DeploymentOptions>()!;
+        var runtimeOptions = configuration.GetSection("RuntimeOptions").Get<RuntimeOptions>()!;
         
-        var stack = new NuagesCdkStack(scope, options.StackName + "Stack", new StackProps
+        var stack = new NuagesCdkStack(scope, deploymentOptions.StackName + "Stack", new StackProps
         {
-            StackName = options.StackName,
+            StackName = deploymentOptions.StackName,
             Env = new Amazon.CDK.Environment
             {
                 Account = System.Environment.GetEnvironmentVariable("CDK_DEFAULT_ACCOUNT"),
@@ -30,53 +31,69 @@ public partial class NuagesCdkStack : Amazon.CDK.Stack
             }
         })
         {
-            DomainName = options.DomainName,
-            CertificateArn = options.CertificateArn,
-            VpcId = options.VpcId,
-            SecurityGroupId = options.SecurityGroupId,
-            GitHubRepository = options.GitHubRepository,
-            GitHubBranch = options.GitHubBranch,
-            GitHubConnectionArn = options.GitHubConnectionArn,
-            AdditionalFilesBucketName = options.AdditionalFilesBucketName,
-            AdditionalFilesZipName = options.AdditionalFilesZipName,
-            EcsCpu = options.EcsCpu,
-            EcsMemoryLimit = options.EcsMemoryLimit,
-            EcsDesiredCount = options.EcsDesiredCount,
-            AppConfigProfileId = options.AppConfigProfileId,
-            AppConfigEnabled = options.AppConfigEnabled.ToString().ToLower(),
-            CertificateFilename = options.CertificateFilename,
-            CertificatePassword = options.CertificatePassword,
-            EcrRepositoryName = options.EcrRepositoryName,
-            TriggerOnPush = options.TriggerOnPush,
-            AppConfigResources = options.AppConfigResources
+            DeploymentOptions = deploymentOptions,
+            RuntimeOptions = runtimeOptions,
+            // DomainName = configOptions.DomainName,
+            // CertificateArn = configOptions.CertificateArn,
+            // VpcId = configOptions.VpcId,
+            // SecurityGroupId = configOptions.SecurityGroupId,
+            // GitHubRepository = configOptions.GitHubRepository,
+            // GitHubBranch = configOptions.GitHubBranch,
+            // GitHubConnectionArn = configOptions.GitHubConnectionArn,
+            // AdditionalFilesBucketName = configOptions.AdditionalFilesBucketName,
+            // AdditionalFilesZipName = configOptions.AdditionalFilesZipName,
+            // EcsCpu = configOptions.EcsCpu,
+            // EcsMemoryLimit = configOptions.EcsMemoryLimit,
+            // EcsDesiredCount = configOptions.EcsDesiredCount,
+            // Runtime_AppConfigProfileId = runtimeOptions.AppConfigProfileId,
+            // Runtime_CertificateFilename = runtimeOptions.CertificateFilename,
+            // Runtime_CertificatePassword = runtimeOptions.CertificatePassword,
+            // EcrRepositoryName = configOptions.EcrRepositoryName,
+            // TriggerOnPush = configOptions.TriggerOnPush,
+            // AppConfigResources = configOptions.AppConfigResources,
+            // SesResources = configOptions.SesResources,
+            // ParameterStoreResources = configOptions.ParameterStoreResources,
+            // SnsResources = configOptions.SnsResources,
+            // SecretResources = configOptions.SecretResources,
+            // CloudWatchResources = configOptions.CloudWatchResources,
+            // EventBridgeResources = configOptions.EventBridgeResources
+            
         };
         
         stack.CreateTemplate();
     }
 
-    public string[] AppConfigResources { get; set; }
+    private RuntimeOptions RuntimeOptions { get; set; } = new ();
 
+    private DeploymentOptions DeploymentOptions { get; set; }= new ();
 
-    private string EcrRepositoryName { get; init; }  = string.Empty;
-    private int EcsDesiredCount { get; init; }
-    private string AppConfigProfileId { get; init; } = string.Empty;
-    private string AppConfigEnabled { get; init; } = string.Empty;
-    private string CertificateFilename { get; init; } = string.Empty;
-    private string CertificatePassword { get; init; } = string.Empty;
-    private string GitHubConnectionArn { get; init; } = string.Empty;
-    private int EcsMemoryLimit { get; init; }
-    private int EcsCpu { get; init; }
-    private string? AdditionalFilesZipName { get; init; }
-    private string? AdditionalFilesBucketName { get; init; }
-    private string CertificateArn { get; init; } = string.Empty;
-    private string DomainName { get; init; } = string.Empty;
-    private string GitHubRepository { get; init; } = string.Empty;
-    private string GitHubBranch { get; init; } = string.Empty;
+    // private string[] AppConfigResources { get; set; } = Array.Empty<string>();
+    // private string[] SesResources { get; set; } = Array.Empty<string>();
+    // private string[] ParameterStoreResources { get; set; } = Array.Empty<string>();
+    // private string[] SnsResources { get; set; } = Array.Empty<string>();
+    // private string[] SecretResources { get; set; } = Array.Empty<string>();
+    // private string[] CloudWatchResources { get; set; } = Array.Empty<string>();
+    // private string[] EventBridgeResources { get; set; } = Array.Empty<string>();
+    
+    //private string EcrRepositoryName { get; init; }  = string.Empty;
+    //private int EcsDesiredCount { get; init; }
+    // private string Runtime_AppConfigProfileId { get; init; } = string.Empty;
+    // private string Runtime_CertificateFilename { get; init; } = string.Empty;
+    // private string Runtime_CertificatePassword { get; init; } = string.Empty;
+    //private string GitHubConnectionArn { get; init; } = string.Empty;
+   // private int EcsMemoryLimit { get; init; }
+    //private int EcsCpu { get; init; }
+    //private string? AdditionalFilesZipName { get; init; }
+   // private string? AdditionalFilesBucketName { get; init; }
+   // private string CertificateArn { get; init; } = string.Empty;
+    //private string DomainName { get; init; } = string.Empty;
+    //private string GitHubRepository { get; init; } = string.Empty;
+    //private string GitHubBranch { get; init; } = string.Empty;
     private IBucket BuildBucket { get; set; } = null!;
     private IBucket? AdditionalFilesBucket { get; set; }
-    private string? VpcId { get; init; }
-    private string? SecurityGroupId { get; init; }
-    private bool TriggerOnPush { get; set; }
+   // private string? VpcId { get; init; }
+    //private string? SecurityGroupId { get; init; }
+    //private bool TriggerOnPush { get; set; }
     
 
     private void CreateTemplate()
@@ -88,9 +105,9 @@ public partial class NuagesCdkStack : Amazon.CDK.Stack
             Versioned = true
         });
         
-        if (!string.IsNullOrEmpty(AdditionalFilesBucketName))
+        if (!string.IsNullOrEmpty(DeploymentOptions.AdditionalFilesBucketName))
         {
-            AdditionalFilesBucket = Bucket.FromBucketName(this, $"{StackName}AddtionalFilesBucket", AdditionalFilesBucketName);
+            AdditionalFilesBucket = Bucket.FromBucketName(this, $"{StackName}AddtionalFilesBucket", DeploymentOptions.AdditionalFilesBucketName);
         }
 
         CreateEcs();
