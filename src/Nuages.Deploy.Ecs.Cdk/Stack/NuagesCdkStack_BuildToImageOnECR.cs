@@ -311,7 +311,7 @@ public partial class NuagesCdkStack
                 trigger = GitHubTrigger.WEBHOOK;
             }
             
-            new GitHubSourceAction(new GitHubSourceActionProps
+            return new GitHubSourceAction(new GitHubSourceActionProps
             {
                 OauthToken = SecretValue.SecretsManager(SourceOptions.GitHubPersonnalAccessTokenSecretName),
                 Output = sourceArtifact,
