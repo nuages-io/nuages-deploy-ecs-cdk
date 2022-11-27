@@ -47,7 +47,19 @@ public partial class NuagesCdkStack
                     "Nuages__ApplicationConfig__AppConfig__ConfigProfileId", RuntimeOptions.AppConfigProfileId ?? ""
                 },
                 {
-                    "Nuages__ApplicationConfig__AppConfig__Enabled", DeploymentOptions.AppConfigResources.Any().ToString().ToLower()
+                    "Nuages__ApplicationConfig__AppConfig__ApplicationId", RuntimeOptions.AppApplicationId ?? ""
+                },
+                {
+                    "Nuages__ApplicationConfig__AppConfig__EnvironmentId", RuntimeOptions.AppEnvironmentId ?? ""
+                },
+                {
+                    "Nuages__ApplicationConfig__AppConfig__Enabled", (!string.IsNullOrEmpty(RuntimeOptions.AppConfigProfileId)).ToString()
+                },
+                {
+                    "Nuages__ApplicationConfig__ParameterStore__Path", RuntimeOptions.AppParameterStorePath ?? ""
+                },
+                {
+                    "Nuages__ApplicationConfig__ParameterStore__Enabled", (!string.IsNullOrEmpty(RuntimeOptions.AppParameterStorePath)).ToString()
                 },
                 {
                     "Nuages__UseAWS", true.ToString().ToLower()

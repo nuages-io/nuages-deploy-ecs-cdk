@@ -34,9 +34,9 @@ public partial class NuagesCdkStack
             ProjectName = MakeId($"{StackName}BuildToECR"),
             Source = Source.GitHub(new GitHubSourceProps
             {
-                Owner = DeploymentOptions.GitHubRepository.Split("/").First(),
-                Repo = DeploymentOptions.GitHubRepository.Split("/").Last(),
-                BranchOrRef = DeploymentOptions.GitHubBranch,
+                Owner = SourceOptions.GitHubRepository.Split("/").First(),
+                Repo = SourceOptions.GitHubRepository.Split("/").Last(),
+                BranchOrRef = SourceOptions.GitHubBranch,
                 Webhook = false
             }),
             Environment = new BuildEnvironment
@@ -171,7 +171,7 @@ public partial class NuagesCdkStack
         
         var imageDef = new Artifact_("BuildArtifact");
 
-        var parts = DeploymentOptions.GitHubRepository.Split("/");
+        var parts = SourceOptions.GitHubRepository.Split("/");
 
         var sourceStageProps = new StageProps
         {
@@ -180,11 +180,11 @@ public partial class NuagesCdkStack
             {
                 new CodeStarConnectionsSourceAction(new CodeStarConnectionsSourceActionProps
                 {
-                    ConnectionArn = DeploymentOptions.GitHubConnectionArn,
+                    ConnectionArn = SourceOptions.GitHubConnectionArn,
                     Output = sourceArtifact,
                     Owner = parts.First(),
                     Repo = parts.Last(),
-                    Branch = DeploymentOptions.GitHubBranch,
+                    Branch = SourceOptions.GitHubBranch,
                     TriggerOnPush = DeploymentOptions.TriggerOnPush,
                     ActionName = "Source"
                 })

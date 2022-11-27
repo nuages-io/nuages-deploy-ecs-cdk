@@ -20,7 +20,8 @@ public partial class NuagesCdkStack : Amazon.CDK.Stack
     {
         var deploymentOptions = configuration.GetSection("DeploymentOptions").Get<DeploymentOptions>()!;
         var runtimeOptions = configuration.GetSection("RuntimeOptions").Get<RuntimeOptions>()!;
-
+        var sourceOptions = configuration.GetSection("SourceOptions").Get<SourceOptions>()!;
+        
         var stackName = configuration.GetValue<string>("StackName");
         
         if (string.IsNullOrEmpty(stackName))
@@ -37,7 +38,8 @@ public partial class NuagesCdkStack : Amazon.CDK.Stack
         })
         {
             DeploymentOptions = deploymentOptions,
-            RuntimeOptions = runtimeOptions            
+            RuntimeOptions = runtimeOptions,
+            SourceOptions = sourceOptions
         };
         
         stack.CreateTemplate();
@@ -45,7 +47,8 @@ public partial class NuagesCdkStack : Amazon.CDK.Stack
 
     private RuntimeOptions RuntimeOptions { get; set; } = new ();
     private DeploymentOptions DeploymentOptions { get; set; } = new ();
-
+    private SourceOptions SourceOptions { get; set; } = new ();
+    
     private IBucket BuildBucket { get; set; } = null!;
     private IBucket? AdditionalFilesBucket { get; set; }
 

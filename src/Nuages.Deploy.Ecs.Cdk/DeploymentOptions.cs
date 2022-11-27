@@ -10,9 +10,7 @@ public class DeploymentOptions
     public string DomainName { get; set; } = null!;
     public string CertificateArn { get; set; } = null!;
     public string VpcId { get; set; } = null!;
-    public string GitHubRepository { get; set; } = null!;
-    public string GitHubBranch { get; set; } = null!;
-    public string GitHubConnectionArn { get; set; } = null!;
+   
     public string? CertificateBucketName { get; set; }
     public string? CertificateZipFileName { get; set; }
     public int EcsCpu { get; set; } = 236;
