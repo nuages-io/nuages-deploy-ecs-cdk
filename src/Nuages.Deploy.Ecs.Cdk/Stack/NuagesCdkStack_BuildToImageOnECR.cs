@@ -302,8 +302,7 @@ public partial class NuagesCdkStack
                 ActionName = "Source"
             });
         }
-
-        if (!string.IsNullOrEmpty(SourceOptions.GitHubPersonnalAccessTokenSecretName))
+        else
         {
             GitHubTrigger? trigger = null;
             if (DeploymentOptions.TriggerOnPush)
@@ -313,7 +312,7 @@ public partial class NuagesCdkStack
             
             return new GitHubSourceAction(new GitHubSourceActionProps
             {
-                OauthToken = SecretValue.SecretsManager(SourceOptions.GitHubPersonnalAccessTokenSecretName),
+                OauthToken = SecretValue.SecretsManager(SourceOptions.GitHubPersonalAccessTokenSecretName),
                 Output = sourceArtifact,
                 Owner =  parts.First(),
                 Repo =  parts.Last(),
@@ -325,6 +324,5 @@ public partial class NuagesCdkStack
             });
         }
         
-        throw new Exception("You must at least provide either of GitHubConnectionArn or GitHubPersonnalAccessTokenSecretName");
     }
 }

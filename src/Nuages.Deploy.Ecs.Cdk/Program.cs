@@ -21,7 +21,7 @@ partial class Program
 
         var builder = configManager
             .AddJsonFile("appsettings.json", false, true)
-            .AddJsonFile("appsettings.deploy.json", false, true)
+            .AddJsonFile("appsettings.deploy.json", true, true)
             .AddEnvironmentVariables();
 
         var configuration = builder.Build();
