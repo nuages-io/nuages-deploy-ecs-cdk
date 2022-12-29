@@ -53,19 +53,19 @@ public partial class NuagesCdkStack
                     "Nuages__ApplicationConfig__AppConfig__EnvironmentId", RuntimeOptions.AppEnvironmentId ?? ""
                 },
                 {
-                    "Nuages__ApplicationConfig__AppConfig__Enabled", (!string.IsNullOrEmpty(RuntimeOptions.AppConfigProfileId)).ToString()
+                    "Nuages__ApplicationConfig__AppConfig__Enabled", (!string.IsNullOrEmpty(RuntimeOptions.AppConfigProfileId)).ToString().ToLower()
                 },
                 {
                     "Nuages__ApplicationConfig__ParameterStore__Path", RuntimeOptions.AppParameterStorePath ?? ""
                 },
                 {
-                    "Nuages__ApplicationConfig__ParameterStore__Enabled", (!string.IsNullOrEmpty(RuntimeOptions.AppParameterStorePath)).ToString()
+                    "Nuages__ApplicationConfig__ParameterStore__Enabled", (!string.IsNullOrEmpty(RuntimeOptions.AppParameterStorePath)).ToString().ToLower()
                 },
                 {
                     "Nuages__UseAWS", true.ToString().ToLower()
                 },
                 {
-                    "Nuages__Certificate__Enabled" , RuntimeOptions.EnableDummyCert.ToString() 
+                    "Nuages__Certificate__Enabled" , RuntimeOptions.EnableDummyCert.ToString().ToLower()
                 },
                 {
                     "ASPNETCORE_Kestrel__Certificates__Default__Password", RuntimeOptions.CertificatePassword ?? ""
