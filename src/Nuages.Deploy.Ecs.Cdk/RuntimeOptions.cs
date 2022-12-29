@@ -11,5 +11,6 @@ public class RuntimeOptions
     
     public string? CertificateFilename { get; set; }
     public string? CertificatePassword { get; set; }
-    
+
+    public bool EnableDummyCert { get; set; }
 }

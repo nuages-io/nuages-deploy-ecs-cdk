@@ -65,6 +65,9 @@ public partial class NuagesCdkStack
                     "Nuages__UseAWS", true.ToString().ToLower()
                 },
                 {
+                    "Nuages__Certificate__Enabled" , RuntimeOptions.EnableDummyCert.ToString() 
+                },
+                {
                     "ASPNETCORE_Kestrel__Certificates__Default__Password", RuntimeOptions.CertificatePassword ?? ""
                 },
                 {
