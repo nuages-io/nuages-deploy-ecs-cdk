@@ -42,7 +42,7 @@ public partial class NuagesCdkStack
             Environment = new BuildEnvironment
             {
                 Privileged = true,
-                BuildImage = LinuxBuildImage.STANDARD_4_0,
+                BuildImage = LinuxBuildImage.STANDARD_6_0,
                 EnvironmentVariables = new Dictionary<string, IBuildEnvironmentVariable>
                 {
                     {
